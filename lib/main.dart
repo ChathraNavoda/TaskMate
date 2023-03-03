@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskmate/screens/add_tasks_screen.dart';
 import 'screens/home_screen.dart';
 
 void main() {
@@ -14,7 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'TaskMate',
       routes: {
         '/': (context) => const HomeScreen(),
+        '/add': (context) => const AddTaskScreen(),
       },
+      initialRoute: '/',
     );
   }
 }

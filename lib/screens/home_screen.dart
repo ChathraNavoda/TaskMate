@@ -20,23 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
               gradient: GlobalVariables.appBarGradient,
             ),
           ),
-          // shape: const RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.vertical(
-          //     bottom: Radius.circular(50),
-          //   ),
-          // ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                alignment: Alignment.topLeft,
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  width: 87,
-                  height: 87,
-                  //color: Colors.black,
-                ),
-              ),
               const Text(
                 'TaskMate',
                 style: TextStyle(
@@ -44,10 +30,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              Container(
+                alignment: Alignment.topLeft,
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  width: 87,
+                  height: 87,
+                ),
+              ),
             ],
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/add');
+        },
+        backgroundColor: GlobalVariables.darkGreenColor,
+        child: const Icon(Icons.add_outlined),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
