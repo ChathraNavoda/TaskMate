@@ -13,13 +13,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(80),
         child: AppBar(
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: GlobalVariables.appBarGradient,
             ),
           ),
+          // shape: const RoundedRectangleBorder(
+          //   borderRadius: BorderRadius.vertical(
+          //     bottom: Radius.circular(50),
+          //   ),
+          // ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -27,18 +32,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 alignment: Alignment.topLeft,
                 child: Image.asset(
                   'assets/images/logo.png',
-                  width: 120,
-                  height: 45,
-                  color: Colors.black,
+                  width: 87,
+                  height: 87,
+                  //color: Colors.black,
                 ),
               ),
               const Text(
                 'TaskMate',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 13, 113, 16),
                   fontWeight: FontWeight.bold,
                 ),
-              )
+              ),
             ],
           ),
         ),
