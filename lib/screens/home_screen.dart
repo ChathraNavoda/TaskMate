@@ -55,64 +55,83 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: StreamBuilder(
-          stream: task.snapshots(),
+          stream: task.orderBy('title').snapshots(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     final DocumentSnapshot taskSnap = snapshot.data.docs[index];
-                    return Container(
-                      height: 80,
-                      color: Colors.white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: CircleAvatar(
-                              backgroundColor: GlobalVariables.darkGreenColor,
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Container(
+                        height: 80,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: GlobalVariables.darkGreenColor,
+                            width: 0.1,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                          boxShadow: [
+                            BoxShadow(
+                              color: GlobalVariables.containerGreenColor,
+                              blurRadius: 10,
+                              spreadRadius: 7,
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: GlobalVariables.lightGreenColor,
                               radius: 40,
                               child: Text(
                                 taskSnap['status'],
-                                style: TextStyle(fontSize: 16),
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                taskSnap['title'],
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                taskSnap['description'],
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.edit_note,
-                                  color: Color.fromARGB(255, 239, 209, 15),
-                                  size: 35,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  taskSnap['title'],
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Color.fromARGB(255, 159, 12, 12),
+                                Text(
+                                  taskSnap['description'],
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.edit_note,
+                                    color: Color.fromARGB(255, 248, 192, 7),
+                                    size: 35,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Color.fromARGB(255, 159, 12, 12),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   });

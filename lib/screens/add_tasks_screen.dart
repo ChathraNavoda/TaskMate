@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:taskmate/constants/global_variables.dart';
 
@@ -11,12 +12,26 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final taskStatus = ['Pending', 'Complted'];
   String? selectedTask;
+  final CollectionReference task =
+      FirebaseFirestore.instance.collection('Task');
+
+  TextEditingController taskTitle = TextEditingController();
+  TextEditingController taskDescription = TextEditingController();
+
+  void addTask() {
+    final data = {
+      'title': taskTitle.text,
+      'description': taskDescription.text,
+      'status': selectedTask,
+    };
+    task.add(data);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
+        preferredSize: const Size.fromHeight(60),
         child: AppBar(
           flexibleSpace: Container(
             decoration: const BoxDecoration(
@@ -37,8 +52,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 alignment: Alignment.topLeft,
                 child: Image.asset(
                   'assets/images/logo.png',
-                  width: 87,
-                  height: 87,
+                  width: 80,
+                  height: 80,
                   //color: Colors.black,
                 ),
               ),
@@ -47,14 +62,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(6.0),
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+            Padding(
+              padding: EdgeInsets.all(6.0),
               child: TextField(
+                controller: taskTitle,
                 keyboardType: TextInputType.text,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   label: Text(
                     'Title',
@@ -63,11 +79,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+            Padding(
+              padding: const EdgeInsets.all(6.0),
               child: TextField(
+                controller: taskDescription,
                 keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   label: Text(
                     'Description',
@@ -104,7 +121,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         const Size(double.infinity, 50)),
                     backgroundColor: MaterialStateProperty.all(
                         GlobalVariables.darkGreenColor)),
-                onPressed: () {},
+                onPressed: () {
+                  addTask();
+                  Navigator.pop(context);
+                },
                 child: const Text(
                   'Add Task',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
