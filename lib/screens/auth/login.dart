@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:taskmate/screens/auth/signup.dart';
+import 'package:taskmate/screens/home_screen.dart';
 
 class Login extends StatefulWidget {
-  Login({Key? key}) : super(key: key);
+  const Login({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginState createState() => _LoginState();
 }
 
@@ -17,6 +20,54 @@ class _LoginState extends State<Login> {
   // of the TextField.
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  userLogin() async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            "You are successfully logged in.",
+            style: TextStyle(fontSize: 20.0),
+          ),
+        ),
+      );
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print("No User Found for that Email");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.orangeAccent,
+            content: Text(
+              "No User Found for that Email",
+              style: TextStyle(fontSize: 18.0, color: Colors.black),
+            ),
+          ),
+        );
+      } else if (e.code == 'wrong-password') {
+        print("Wrong Password Provided by User");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.orangeAccent,
+            content: Text(
+              "Wrong Password Provided by User",
+              style: TextStyle(fontSize: 18.0, color: Colors.black),
+            ),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -94,7 +145,7 @@ class _LoginState extends State<Login> {
                             email = emailController.text;
                             password = passwordController.text;
                           });
-                          //  userLogin();
+                          userLogin();
                         }
                       },
                       child: const Text(

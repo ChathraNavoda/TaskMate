@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:taskmate/constants/global_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:taskmate/screens/auth/login.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               const Text(
                 'TaskMate',
@@ -40,13 +42,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.center,
                 child: Image.asset(
                   'assets/images/logo.png',
                   width: 87,
                   height: 87,
                 ),
               ),
+              const SizedBox(
+                width: 120,
+              ),
+              IconButton(
+                  onPressed: () async => {
+                        await FirebaseAuth.instance.signOut(),
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Login(),
+                            ),
+                            (route) => false)
+                      },
+                  icon: const Icon(Icons.logout))
             ],
           ),
         ),
