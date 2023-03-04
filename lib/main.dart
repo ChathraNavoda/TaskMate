@@ -3,6 +3,7 @@
 
 import 'package:taskmate/screens/add_tasks_screen.dart';
 import 'package:taskmate/screens/auth/login.dart';
+import 'package:taskmate/screens/splash_screen.dart';
 import 'package:taskmate/screens/update_screen.dart';
 import 'screens/home_screen.dart';
 
@@ -50,17 +51,17 @@ class MyApp extends StatelessWidget {
             print("Something Went Wrong");
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           return MaterialApp(
             title: 'TaskMate',
             routes: {
-             // '/': (context) => const HomeScreen(),
+              '/': (context) => const Splash(),
               '/add': (context) => const AddTaskScreen(),
               '/update': (context) => const UpdateTaskScreen(),
-              '/login': (context) => Login(),
+              '/login': (context) => const Login(),
             },
-            initialRoute: '/login',
+            initialRoute: '/',
           );
         });
   }

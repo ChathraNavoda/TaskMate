@@ -90,7 +90,7 @@ class _LoginState extends State<Login> {
           child: ListView(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(
                   autofocus: false,
                   decoration: const InputDecoration(
