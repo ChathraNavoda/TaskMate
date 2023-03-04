@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:taskmate/constants/global_variables.dart';
+import 'package:taskmate/screens/auth/login.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -39,24 +41,37 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
           ),
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               const Text(
-                'Add Task',
+                'TaskMate',
                 style: TextStyle(
                   color: Color.fromARGB(255, 13, 113, 16),
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Container(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.center,
                 child: Image.asset(
                   'assets/images/logo.png',
-                  width: 80,
-                  height: 80,
-                  //color: Colors.black,
+                  width: 87,
+                  height: 87,
                 ),
               ),
+              const SizedBox(
+                width: 90,
+              ),
+              IconButton(
+                  onPressed: () async => {
+                        await FirebaseAuth.instance.signOut(),
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Login(),
+                            ),
+                            (route) => false)
+                      },
+                  icon: const Icon(Icons.logout))
             ],
           ),
         ),
@@ -117,10 +132,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 40),
               child: ElevatedButton(
                 style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(
-                        const Size(double.infinity, 50)),
-                    backgroundColor: MaterialStateProperty.all(
-                        GlobalVariables.lightGreenColor)),
+                  minimumSize: MaterialStateProperty.all(
+                      const Size(double.infinity, 50)),
+                  backgroundColor: MaterialStateProperty.all(
+                      GlobalVariables.lightGreenColor),
+                ),
                 onPressed: () {
                   addTask();
                   Navigator.pop(context);

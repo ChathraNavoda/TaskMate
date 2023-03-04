@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:taskmate/constants/global_variables.dart';
 import 'package:taskmate/screens/auth/signup.dart';
 import 'package:taskmate/screens/home_screen.dart';
 
@@ -80,8 +81,36 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("User Login"),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
+        child: AppBar(
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: GlobalVariables.appBarGradient,
+            ),
+          ),
+          title: Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'TaskMate',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 13, 113, 16),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Container(
+                alignment: Alignment.topLeft,
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  width: 80,
+                  height: 80,
+                  //color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Form(
         key: _formKey,
@@ -90,7 +119,7 @@ class _LoginState extends State<Login> {
           child: ListView(
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.only(top: 200),
                 child: TextFormField(
                   autofocus: false,
                   decoration: const InputDecoration(
@@ -132,49 +161,35 @@ class _LoginState extends State<Login> {
                   },
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 60.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, otherwise false.
-                        if (_formKey.currentState!.validate()) {
-                          setState(() {
-                            email = emailController.text;
-                            password = passwordController.text;
-                          });
-                          userLogin();
-                        }
-                      },
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //     // ForgotPassword(),
-                        //   ),
-                        // )
-                      },
-                      child: const Text(
-                        'Forgot Password ?',
-                        style: TextStyle(fontSize: 14.0),
-                      ),
-                    ),
-                  ],
+              ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(
+                      const Size(double.infinity, 50)),
+                  backgroundColor: MaterialStateProperty.all(
+                      GlobalVariables.lightGreenColor),
+                ),
+                onPressed: () {
+                  // Validate returns true if the form is valid, otherwise false.
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      email = emailController.text;
+                      password = passwordController.text;
+                    });
+                    userLogin();
+                  }
+                },
+                child: const Text(
+                  'Login',
+                  style: TextStyle(fontSize: 18.0),
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don't have an Account? "),
+                  const Text(
+                    "Don't have an Account? ",
+                    style: TextStyle(fontSize: 16),
+                  ),
                   TextButton(
                     onPressed: () => {
                       Navigator.pushAndRemoveUntil(
@@ -185,7 +200,10 @@ class _LoginState extends State<Login> {
                           ),
                           (route) => false)
                     },
-                    child: const Text('Signup'),
+                    child: const Text(
+                      'Signup',
+                      style: TextStyle(color: Colors.green, fontSize: 16),
+                    ),
                   ),
                 ],
               )

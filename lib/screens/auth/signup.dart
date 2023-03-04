@@ -96,8 +96,36 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("User SignUp"),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
+        child: AppBar(
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: GlobalVariables.appBarGradient,
+            ),
+          ),
+          title: Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'TaskMate',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 13, 113, 16),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Container(
+                alignment: Alignment.topLeft,
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  width: 80,
+                  height: 80,
+                  //color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Form(
         key: _formKey,
@@ -106,7 +134,7 @@ class _SignupState extends State<Signup> {
           child: ListView(
             children: [
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.only(top: 200),
                 child: TextFormField(
                   autofocus: false,
                   decoration: const InputDecoration(
@@ -169,45 +197,50 @@ class _SignupState extends State<Signup> {
                   },
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Validate returns true if the form is valid, otherwise false.
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          email = emailController.text;
-                          password = passwordController.text;
-                          confirmPassword = confirmPasswordController.text;
-                        });
-                        registration();
-                      }
-                    },
-                    child: const Text(
-                      'Sign Up',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                  ),
-                ],
+              ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(
+                      const Size(double.infinity, 50)),
+                  backgroundColor: MaterialStateProperty.all(
+                      GlobalVariables.lightGreenColor),
+                ),
+                onPressed: () {
+                  // Validate returns true if the form is valid, otherwise false.
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      email = emailController.text;
+                      password = passwordController.text;
+                      confirmPassword = confirmPasswordController.text;
+                    });
+                    registration();
+                  }
+                },
+                child: const Text(
+                  'Sign Up',
+                  style: TextStyle(fontSize: 18.0),
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Already have an Account? "),
+                  const Text("Already have an Account? ",
+                      style: TextStyle(fontSize: 16)),
                   TextButton(
-                      onPressed: () => {
-                            Navigator.pushReplacement(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder:
-                                    (context, animation1, animation2) =>
-                                        Login(),
-                                transitionDuration: const Duration(seconds: 0),
-                              ),
-                            )
-                          },
-                      child: const Text('Login'))
+                    onPressed: () => {
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) =>
+                              Login(),
+                          transitionDuration: const Duration(seconds: 0),
+                        ),
+                      )
+                    },
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(color: Colors.green, fontSize: 16),
+                    ),
+                  ),
                 ],
               )
             ],
