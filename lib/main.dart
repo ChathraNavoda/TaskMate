@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
 import 'package:taskmate/screens/add_tasks_screen.dart';
+import 'package:taskmate/screens/auth/login.dart';
 import 'package:taskmate/screens/update_screen.dart';
 import 'screens/home_screen.dart';
 
@@ -21,8 +23,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomeScreen(),
         '/add': (context) => const AddTaskScreen(),
         '/update': (context) => const UpdateTaskScreen(),
+        '/login': (context) => Login(),
       },
-      initialRoute: '/',
+      initialRoute: '/login',
     );
   }
 }
