@@ -13,6 +13,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final CollectionReference task =
       FirebaseFirestore.instance.collection('Task');
+
+  void deleteTask(docId) {
+    task.doc(docId).delete();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               const Text(
                 'TaskMate',
@@ -50,10 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.pushNamed(context, '/add');
         },
-        backgroundColor: GlobalVariables.darkGreenColor,
+        backgroundColor: GlobalVariables.lightGreenColor,
         child: const Icon(Icons.add_outlined),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
       body: StreamBuilder(
           stream: task.orderBy('title').snapshots(),
           builder: (context, AsyncSnapshot snapshot) {
@@ -63,12 +69,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     final DocumentSnapshot taskSnap = snapshot.data.docs[index];
                     return Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 10),
                       child: Container(
                         height: 80,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: GlobalVariables.darkGreenColor,
+                            color: GlobalVariables.lightGreenColor,
                             width: 0.1,
                           ),
                           borderRadius: BorderRadius.circular(50),
@@ -131,7 +138,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    deleteTask(taskSnap.id);
+                                  },
                                   icon: const Icon(
                                     Icons.delete,
                                     color: Color.fromARGB(255, 159, 12, 12),

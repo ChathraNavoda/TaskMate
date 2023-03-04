@@ -120,7 +120,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     minimumSize: MaterialStateProperty.all(
                         const Size(double.infinity, 50)),
                     backgroundColor: MaterialStateProperty.all(
-                        GlobalVariables.darkGreenColor)),
+                        GlobalVariables.lightGreenColor)),
                 onPressed: () {
                   addTask();
                   Navigator.pop(context);
