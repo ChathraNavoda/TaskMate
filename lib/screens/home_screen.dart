@@ -114,7 +114,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               children: [
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/update',
+                                        arguments: {
+                                          'title': taskSnap['title'],
+                                          'description':
+                                              taskSnap['description'],
+                                          'status': taskSnap['status'],
+                                          'id': taskSnap.id,
+                                        });
+                                  },
                                   icon: const Icon(
                                     Icons.edit_note,
                                     color: Color.fromARGB(255, 248, 192, 7),
